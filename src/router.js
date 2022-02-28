@@ -49,8 +49,8 @@ const router = createRouter({
     history: createWebHistory()
 })
 router.beforeEach((to, from, next) => {
-    console.log(sessionStorage.getItem('tokenRenderAt') < Date.now())
-
+    // console.log(sessionStorage.getItem('tokenRenderAt') < Date.now())
+//
     if (to.matched.some(record => record.meta.requiredAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
