@@ -15,29 +15,32 @@ const routes = [
         path: '/',
         component: Home,
         meta: {
-            requiredAuth: true
+            // requiredAuth: true,
+            layout : 'admin'
         },
     },
     {
         path: '/krs',
         component: () => import('./views/KRS.vue'),
         meta: {
-            requiredAuth: true
+            // requiredAuth: true,
+            layout : 'admin'
         },
     },
     {
         path: '/aktivitas',
         component: () => import('./views/Aktivitas.vue'),
         meta: {
-            requiredAuth: true
+            // requiredAuth: true,
+            layout : 'admin'
         },
     },
     {
         path: '/kamus',
         component: Kamus,
-        meta: {
-            requiredAuth: true
-        }
+        // meta: {
+        //     requiredAuth: true
+        // }
     },
 ]
 

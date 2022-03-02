@@ -218,7 +218,7 @@ export default {
     const router = useRouter();
     const { json, loading, exec, status } = useFetch();
     const onSubmit = async () => {
-      await exec(wsConfig.baseUrl + import.meta.env.VITE_PDDIKTI_PATH, {
+      await exec( import.meta.env.VITE_PDDIKTI_PATH, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
