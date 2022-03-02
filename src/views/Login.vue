@@ -225,10 +225,11 @@ export default {
         },
         body: JSON.stringify(auth),
       });
-
       if (status.value === 200) {
         const data = json.value;
-        if (data["error_code"] === "0") {
+     
+        if (data["error_code"] == "0") {
+          
           sessionStorage.setItem("token", data.data.token);
           // router.go(-1)
           let t = new Date();
