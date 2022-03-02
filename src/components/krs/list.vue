@@ -1,5 +1,6 @@
 <template>
-  <div class="mx-auto px-4 sm:px-2 ">
+  <!--  <div class="mx-auto px-4 sm:px-2">
+    
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
       <div class="shadow rounded-lg overflow-auto">
         <table class="w-full">
@@ -62,78 +63,31 @@
               >
                 Matakuliah
               </th>
-              <th
-                scope="col"
-                class="
-                  px-5
-                  py-3
-                  bg-white
-                  border-b border-gray-200
-                  text-gray-800 text-left text-sm
-                  uppercase
-                  font-semibold
-                "
-              >
-                Angka
-              </th>
-              <th
-                scope="col"
-                class="
-                  px-5
-                  py-3
-                  bg-white
-                  border-b border-gray-200
-                  text-gray-800 text-left text-sm
-                  uppercase
-                  font-semibold
-                "
-              >
-                Huruf
-              </th>
-              <th
-                scope="col"
-                class="
-                  px-5
-                  py-3
-                  bg-white
-                  border-b border-gray-200
-                  text-gray-800 text-left text-sm
-                  uppercase
-                  font-semibold
-                "
-              >
-                Index
-              </th>
-
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(n,i) in sampleData" :key="i">
+            <tr v-for="(n, i) in listKRS" :key="i">
               <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">{{n.nama_program_studi}}</p>
+                <p class="text-gray-900 whitespace-nowrap">
+                  {{ n.nama_program_studi }}
+                </p>
               </td>
               <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">{{n.id_semester}}</p>
+                <p class="text-gray-900 whitespace-nowrap">
+                  {{ n.id_periode }}
+                </p>
               </td>
               <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">{{n.nama_mahasiswa}}</p>
+                <p class="text-gray-900 whitespace-nowrap">
+                  {{ n.nama_mahasiswa }}
+                </p>
               </td>
               <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">{{n.nama_mata_kuliah}} - {{n.kode_mata_kuliah}}</p>
+                <p class="text-gray-900 whitespace-nowrap">
+                  {{ n.nama_mata_kuliah }} - {{ n.kode_mata_kuliah }}
+                </p>
               </td>
-              <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">{{n.nilai_angka}}</p>
-              </td>
-              <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">{{n.nilai_huruf}}</p>
-              </td>
-              <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">{{n.nilai_indeks}}</p>
-              </td>
-
-
             </tr>
-
           </tbody>
         </table>
         <div
@@ -260,57 +214,104 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <!-- <button @click="getKRS">load</button>
-<table class="ws-table" v-if="listKRS.length">
-    <thead>
+  <!-- <button @click="getKRS">load</button> -->
+  <div class="bg-white mt-4 px-4 py-4">
+    <div class="flex">
+      <div class="flex-none">
+        <select
+          class="select max-w-xs select-xs select-ghost"
+          v-model="perpage"
+        >
+          <option v-for="(p, i) in perpageList" :key="i" :value="p">
+            {{ p }}
+          </option>
+        </select>
+        <span class="text-sm"> dari 100 data</span>
+      </div>
+    </div>
+    <table class="table table-compact w-full" v-if="listKRS.length">
+      <thead>
         <tr>
-            <th></th>
-            <th>NIM</th>
-            <th>NAMA</th>
-            <th>PERIODE</th>
-            <th>MATAKULIAH</th>
-            <th>SKS</th>
-            <th>KELAS</th>
+          <th></th>
+          <th>NIM</th>
+          <th>NAMA</th>
+          <th>PERIODE</th>
+          <th>MATAKULIAH</th>
+          <th>SKS</th>
+          <th>KELAS</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr v-for="(d,i) in listKRS" :key="i">
-            <td>
-                <button @click="hapusKRS(d.id_registrasi_mahasiswa, d.id_kelas)">x</button>
-            </td>
-            <td>{{d.nim}}</td>
-            <td>{{d.nama_mahasiswa}}</td>
-            <td>{{d.id_periode}}</td>
-            <td>{{d.nama_mata_kuliah}}</td>
-            <td>{{d.sks_mata_kuliah}}</td>
+      </thead>
+      <tbody>
+        <tr v-for="(d, i) in listKRS" :key="i">
+          <td>
+            <button
+              class="btn btn-xs text-white btn-error"
+              @click="hapusKRS(d.id_registrasi_mahasiswa, d.id_kelas)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+            </button>
+          </td>
+          <td>{{ d.nim }}</td>
+          <td>{{ d.nama_mahasiswa }}</td>
+          <td>{{ d.id_periode }}</td>
+          <td>{{ d.nama_mata_kuliah }}</td>
+          <td>{{ d.sks_mata_kuliah }}</td>
+          <td>{{ d.nama_kelas_kuliah }}</td>
         </tr>
-    </tbody>
-</table> -->
+      </tbody>
+    </table>
+    <div class="mx-auto">
+      <div class="btn-group">
+        <button class="btn btn-sm">1</button>
+        <button class="btn btn-sm btn-active">2</button>
+        <button class="btn btn-sm">3</button>
+        <button class="btn btn-sm">4</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import sampleJson from '../../sample/nilai.json'
-const token = localStorage.getItem("token");
-import { reactive } from "vue";
+// import sampleJson from '../../sample/nilai.json'
+const token = sessionStorage.getItem("token");
+import { onMounted, reactive, ref } from "vue";
 import { useFetch } from "vue-composable";
+const base = import.meta.env.VITE_PDDIKTI_PATH;
 export default {
   name: "krs_list",
   setup() {
     const listKRS = reactive([]);
-    const perpage = reactive([]);
+    const perpageList = [10, 25, 50, 100];
+    const perpage = ref(10);
+    const page = ref(1);
+    const totalKRS = ref(0);
     const { exec, json } = useFetch();
     const requestParams = reactive({
       token: token,
       act: "GetKRSMahasiswa",
       filter: "",
-      limit: 10,
-      offset: 0,
+      limit: perpage.value,
+      offset: perpage.value * (page.value - 1),
     });
-    const sampleData = sampleJson
+    // const sampleData = sampleJson
+    const sampleData = [];
     const getKRS = async () => {
-      await exec("/ws/sandbox2.php", {
+      await exec(base, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -318,7 +319,7 @@ export default {
         body: JSON.stringify(requestParams),
       });
       const data = json.value;
-      if (data["error_code"] === "0") {
+      if (data["error_code"] == "0") {
         data["data"].forEach((el) => {
           listKRS.push(el);
         });
@@ -326,16 +327,47 @@ export default {
         alert(data["error_desc"]);
       }
     };
+    const getCountKRS = async() => {
+      await exec(base, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: token,
+          act: "GetCountPesertaKelasKuliah",
+          filter: "",
+          limit: perpage.value,
+          offset: perpage.value * (page.value - 1),
+        }),
+      });
+      const data = json.value;
+      if (data["error_code"] == "0") {
+        totalKRS.value = parseInt(data.data)
+      } else {
+        alert(data["error_desc"]);
+      }
+    };
+
     const hapusKRS = async (val, val2) => {
       console.log(val);
       console.log(val2);
     };
+
+    onMounted(() => {
+      getKRS();
+      getCountKRS();
+      // getCountKRS
+      
+    });
     return {
       listKRS,
-      getKRS,
       perpage,
+      page,
       hapusKRS,
-      sampleData
+      sampleData,
+      perpageList,
+      totalKRS
     };
   },
 };
