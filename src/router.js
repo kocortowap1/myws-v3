@@ -20,8 +20,40 @@ const routes = [
         },
     },
     {
+        path: '/mhs',
+        component: () => import('./views/MHS.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout : 'admin'
+        },
+    },
+    {
+        path: '/matakuliah',
+        component: () => import('./views/Matakuliah.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout : 'admin'
+        },
+    },
+    {
+        path: '/kelas',
+        component: () => import('./views/Kelas.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout : 'admin'
+        },
+    },
+    {
         path: '/krs',
         component: () => import('./views/KRS.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout : 'admin'
+        },
+    },
+    {
+        path: '/akm',
+        component: () => import('./views/AKM.vue'),
         meta: {
             // requiredAuth: true,
             layout : 'admin'

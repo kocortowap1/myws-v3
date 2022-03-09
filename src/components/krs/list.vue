@@ -1,224 +1,6 @@
 <template>
-  <!--  <div class="mx-auto px-4 sm:px-2">
-    
-    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-      <div class="shadow rounded-lg overflow-auto">
-        <table class="w-full">
-          <thead>
-            <tr>
-              <th
-                scope="col"
-                class="
-                  px-5
-                  py-3
-                  bg-white
-                  border-b border-gray-200
-                  text-gray-800 text-left text-sm
-                  uppercase
-                  font-semibold
-                "
-              >
-                Prodi
-              </th>
-              <th
-                scope="col"
-                class="
-                  px-5
-                  py-3
-                  bg-white
-                  border-b border-gray-200
-                  text-gray-800 text-left text-sm
-                  uppercase
-                  font-semibold
-                  w-8
-                "
-              >
-                Periode
-              </th>
-              <th
-                scope="col"
-                class="
-                  px-5
-                  py-3
-                  bg-white
-                  border-b border-gray-200
-                  text-gray-800 text-left text-sm
-                  uppercase
-                  font-semibold
-                "
-              >
-                Nama
-              </th>
-              <th
-                scope="col"
-                class="
-                  px-5
-                  py-3
-                  bg-white
-                  border-b border-gray-200
-                  text-gray-800 text-left text-sm
-                  uppercase
-                  font-semibold
-                "
-              >
-                Matakuliah
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(n, i) in listKRS" :key="i">
-              <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">
-                  {{ n.nama_program_studi }}
-                </p>
-              </td>
-              <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">
-                  {{ n.id_periode }}
-                </p>
-              </td>
-              <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">
-                  {{ n.nama_mahasiswa }}
-                </p>
-              </td>
-              <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-nowrap">
-                  {{ n.nama_mata_kuliah }} - {{ n.kode_mata_kuliah }}
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div
-          class="
-            px-5
-            bg-white
-            py-5
-            flex flex-col
-            xs:flex-row
-            items-center
-            xs:justify-between
-          "
-        >
-          <div class="flex items-center">
-            <button
-              type="button"
-              class="
-                w-full
-                p-4
-                border
-                text-base
-                rounded-l-xl
-                text-gray-600
-                bg-white
-                hover:bg-gray-100
-              "
-            >
-              <svg
-                width="9"
-                fill="currentColor"
-                height="8"
-                class=""
-                viewBox="0 0 1792 1792"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z"
-                ></path>
-              </svg>
-            </button>
-            <button
-              type="button"
-              class="
-                w-full
-                px-4
-                py-2
-                border-t border-b
-                text-base text-indigo-500
-                bg-white
-                hover:bg-gray-100
-              "
-            >
-              1
-            </button>
-            <button
-              type="button"
-              class="
-                w-full
-                px-4
-                py-2
-                border
-                text-base text-gray-600
-                bg-white
-                hover:bg-gray-100
-              "
-            >
-              2
-            </button>
-            <button
-              type="button"
-              class="
-                w-full
-                px-4
-                py-2
-                border-t border-b
-                text-base text-gray-600
-                bg-white
-                hover:bg-gray-100
-              "
-            >
-              3
-            </button>
-            <button
-              type="button"
-              class="
-                w-full
-                px-4
-                py-2
-                border
-                text-base text-gray-600
-                bg-white
-                hover:bg-gray-100
-              "
-            >
-              4
-            </button>
-            <button
-              type="button"
-              class="
-                w-full
-                p-4
-                border-t border-b border-r
-                text-base
-                rounded-r-xl
-                text-gray-600
-                bg-white
-                hover:bg-gray-100
-              "
-            >
-              <svg
-                width="9"
-                fill="currentColor"
-                height="8"
-                class=""
-                viewBox="0 0 1792 1792"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"
-                ></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-  <!-- <button @click="getKRS">load</button> -->
   <div class="bg-white mt-4 px-4 py-4">
-    <div class="flex">
+    <div class="flex justify-between items-center py-2">
       <div class="flex-none">
         <select
           class="select max-w-xs select-xs select-ghost"
@@ -229,6 +11,49 @@
           </option>
         </select>
         <span class="text-sm"> dari 100 data</span>
+      </div>
+      <div class="flex gap-x-2 items-center">
+        <div class="form-control">
+          <div class="input-group input-group-sm">
+            <input
+              type="text"
+              placeholder="Cari berdasarkan NIM"
+              class="input input-bordered input-sm"
+            />
+            <button class="btn btn-square btn-sm" @click="showModal">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-sm">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+            />
+          </svg>
+        </button>
       </div>
     </div>
     <table class="table table-compact w-full" v-if="listKRS.length">
@@ -284,6 +109,18 @@
       </div>
     </div>
   </div>
+  <div class="modal" v-if="isFilter">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Congratulations random Interner user!</h3>
+      <p class="py-4">
+        You've been selected for a chance to get one year of subscription to use
+        Wikipedia for free!
+      </p>
+      <div class="modal-action">
+        <label for="my-modal" class="btn">Yay!</label>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -296,6 +133,7 @@ export default {
   name: "krs_list",
   setup() {
     const listKRS = reactive([]);
+    const isFilter = ref(false)
     const perpageList = [10, 25, 50, 100];
     const perpage = ref(10);
     const page = ref(1);
@@ -327,7 +165,7 @@ export default {
         alert(data["error_desc"]);
       }
     };
-    const getCountKRS = async() => {
+    const getCountKRS = async () => {
       await exec(base, {
         method: "POST",
         headers: {
@@ -343,7 +181,7 @@ export default {
       });
       const data = json.value;
       if (data["error_code"] == "0") {
-        totalKRS.value = parseInt(data.data)
+        totalKRS.value = parseInt(data.data);
       } else {
         alert(data["error_desc"]);
       }
@@ -353,12 +191,14 @@ export default {
       console.log(val);
       console.log(val2);
     };
+    function showModal ()  {
+      isFilter.value = true
+    }
 
     onMounted(() => {
       getKRS();
-      getCountKRS();
+      // getCountKRS();
       // getCountKRS
-      
     });
     return {
       listKRS,
@@ -367,7 +207,9 @@ export default {
       hapusKRS,
       sampleData,
       perpageList,
-      totalKRS
+      totalKRS,
+      isFilter,
+      showModal
     };
   },
 };
