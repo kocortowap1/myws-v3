@@ -16,7 +16,7 @@
         />
       </svg>
     </span>
-    <span class="text-4xl"> This feature is under constructions </span>
+    <span class="text-4xl"> Fitur Kelas sedang diperbaiki </span>
   </div>
 </template>
 <script>
