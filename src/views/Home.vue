@@ -4,6 +4,44 @@
       {{ profil.kode_perguruan_tinggi }} - {{ profil.nama_perguruan_tinggi }}
     </h1>
     <span class="text-sm text-gray-400">{{ profil.jalan }}</span>
+    <div class="">
+      <ul class="grid grid-cols-3 gap-2">
+        <li
+          v-for="prodi in prodiList"
+          :key="prodi.id_prodi"
+          class="bg-white flex p-2 space-x-2 items-center"
+        >
+          <div class="px-2">
+            {{ prodi.nama_jenjang_pendidikan }}
+          </div>
+          <div class="grow">
+            <p>{{ prodi.nama_program_studi }}</p>
+            <span class="text-xs text-gray-300">{{ prodi.id_prodi }}</span>
+          </div>
+          <button
+            class="btn"
+            title="Copy id_prodi"
+            type="button"
+            @click="copyID(prodi.id_prodi)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -16,28 +54,40 @@ export default {
   name: "Home",
   setup() {
     let profil = reactive({});
-    let prodiList = reactive([])
+    let prodiList = reactive([]);
     async function fetchProfil() {
-      const data = await getData({ act: "GetProfilPT", limit: null });
-      if (data.status) {
-        Object.assign(profil, data["data"][0]);
+      if (!Object.entries(profil).length) {
+        const data = await getData({ act: "GetProfilPT", limit: null });
+        if (data.status) {
+          Object.assign(profil, data["data"][0]);
+        }
+      } else {
+        alert(data.message);
       }
     }
-    async function fetchProdi(){
-        const data = await getData({act: 'GetProdi', limit: null})
-        if(data.status){
-            data.data.forEach(el => {
-                prodiList.push(el)
-            });
+    async function fetchProdi() {
+      if (!prodiList.length) {
+        const data = await getData({ act: "GetProdi", limit: null });
+        if (data.status) {
+          data.data.forEach((el) => {
+            prodiList.push(el);
+          });
+        } else {
+          alert(data.message);
         }
+      }
     }
+    const copyID = async (val) => {
+      await navigator.clipboard.writeText(val);
+    };
     onMounted(() => {
       fetchProfil();
-      fetchProdi()
+      fetchProdi();
     });
     return {
       profil,
-      prodiList
+      prodiList,
+      copyID,
     };
   },
 };
