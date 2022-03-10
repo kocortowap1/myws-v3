@@ -19,7 +19,7 @@ async function getData({ act, filter = "", order = "", limit = 10, offset = 0 } 
             })
         })
         const response = json.value
-        if (response['error_code'] === "0") {
+        if (response['error_code'] == "0") {
             return { status: true, data: response['data'] }
         } else {
             return { status: false, message: response['error_desc'] }
@@ -44,7 +44,7 @@ async function postData({ act, record } = {}) {
             })
         })
         const response = json.value
-        if (response['error_code'] === "0") {
+        if (response['error_code'] == "0") {
             return { status: true, data: response['data'] }
         } else {
             return { status: false, message: response['error_desc'] }
@@ -71,7 +71,7 @@ async function putData({ act, record, keys } = {}) {
             })
         })
         const response = json.value
-        if (response['error_code'] === "0") {
+        if (response['error_code'] == "0") {
             return { status: true, data: response['data'] }
         } else {
             return { status: false, message: response['error_desc'] }
@@ -96,7 +96,7 @@ async function deleteData({ act, keys } = {}) {
             })
         })
         const response = json.value
-        if (response['error_code'] === "0") {
+        if (response['error_code'] == "0") {
             return { status: true, data: response['data'] }
         } else {
             return { status: false, message: response['error_desc'] }
