@@ -10,7 +10,8 @@
     "daisyui": "^2.2.2",
     "vue": "^3.0.5",
     "vue-composable": "^1.0.0-beta.23",
-    "vue-router": "^4.0.11"
+    "vue-router": "^4.0.11",
+    "xlsx": "^0.18.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.5",
