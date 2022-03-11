@@ -265,6 +265,46 @@
               <span class="flex-grow text-right"> </span>
             </a>
           </router-link>
+          <hr>
+            <router-link to="/kamus" v-slot="{ href, navigate, isActive }">
+            <a
+              :href="href"
+              @click="navigate"
+              :class="isActive ? 'bg-gray-100' : null"
+              class="
+                hover:text-gray-800 hover:bg-gray-100
+                flex
+                items-center
+                p-2
+                my-2
+                transition-colors
+                dark:hover:text-white dark:hover:bg-gray-600
+                duration-200
+                text-gray-600
+                dark:text-gray-400
+                rounded-lg
+              "
+            >
+              <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            />
+          </svg>
+              <span class="mx-4 text-md font-normal">
+                Kamus WS2
+              </span>
+              <span class="flex-grow text-right"> </span>
+            </a>
+          </router-link>
         </nav>
       </div>
     </div>
