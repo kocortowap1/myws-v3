@@ -4,10 +4,10 @@
       {{ profil.kode_perguruan_tinggi }} - {{ profil.nama_perguruan_tinggi }}
     </h1>
     <span class="text-sm text-gray-400">{{ profil.jalan }}</span>
-    <div class="">
+    <div class="mt-4">
       <ul class="grid grid-cols-3 gap-2">
         <li
-          v-for="prodi in prodiList"
+          v-for="prodi in profil.prodi"
           :key="prodi.id_prodi"
           class="bg-white flex p-2 space-x-2 items-center"
         >
@@ -19,7 +19,8 @@
             <span class="text-xs text-gray-300">{{ prodi.id_prodi }}</span>
           </div>
           <button
-            class="btn"
+            v-if="prodi.status === 'A'"
+            class="btn btn-sm bg-white text-gray-400"
             title="Copy id_prodi"
             type="button"
             @click="copyID(prodi.id_prodi)"
@@ -46,43 +47,71 @@
 </template>
 
 <script>
-import { onMounted, reactive } from "@vue/runtime-core";
+import { onMounted, reactive, toRefs } from "@vue/runtime-core";
 // import { profilPT } from "../composable/profilPT";
 import { getData } from "../lib/pddikti";
+import { useLocalStorage } from "vue-composable";
 
 export default {
   name: "Home",
   setup() {
     let profil = reactive({});
     let prodiList = reactive([]);
+    let persistentProfil = {};
+    const { supported, storage, setSync } = useLocalStorage(
+      "wsProfil",
+      false,
+      true
+    );
     async function fetchProfil() {
-      if (!Object.entries(profil).length) {
-        const data = await getData({ act: "GetProfilPT", limit: null });
-        if (data.status) {
-          Object.assign(profil, data["data"][0]);
-        }
+      // if (!Object.entries(profil).length) {
+      const data = await getData({ act: "GetProfilPT", limit: null });
+      if (data.status) {
+        Object.assign(profil, data["data"][0]);
+        // storage.value =data['data'][0]
+        Object.assign(persistentProfil, data["data"][0]);
       } else {
         alert(data.message);
       }
     }
+    // }
     async function fetchProdi() {
-      if (!prodiList.length) {
-        const data = await getData({ act: "GetProdi", limit: null });
-        if (data.status) {
-          data.data.forEach((el) => {
-            prodiList.push(el);
-          });
-        } else {
-          alert(data.message);
-        }
+      // if (!prodiList.length) {
+      const data = await getData({ act: "GetProdi", limit: null });
+      if (data.status) {
+        data.data.forEach((el) => {
+          prodiList.push(el);
+        });
+        persistentProfil["prodi"] = data.data;
+      } else {
+        alert(data.message);
+      }
+      // }
+    }
+    async function initProfil() {
+      if (supported && !!storage.value === true) {
+        const val = storage.value;
+        Object.assign(profil, storage.value);
+        const prodi = storage.value["prodi"];
+
+        console.log(prodi);
+        // prodi.foreach((el) => {
+        //   //   prodiList.push(el)
+        //   console.log(el);
+        // });
+      } else {
+        await fetchProfil();
+        await fetchProdi();
+        storage.value = persistentProfil;
       }
     }
     const copyID = async (val) => {
       await navigator.clipboard.writeText(val);
     };
     onMounted(() => {
-      fetchProfil();
-      fetchProdi();
+      // fetchProfil();
+      // fetchProdi();
+      initProfil();
     });
     return {
       profil,
