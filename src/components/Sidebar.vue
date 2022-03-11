@@ -1,7 +1,7 @@
 <template>
   <div class="relative bg-white dark:bg-gray-800">
     <div class="flex flex-col sm:flex-row sm:justify-around">
-      <div class="w-64 h-screen overflow-y-auto">
+      <div class="w-64 h-full overflow-y-auto">
         <div class="flex items-center justify-start mx-6 mt-10">
           <img class="h-10" src="../assets/transfer.png" />
           <span

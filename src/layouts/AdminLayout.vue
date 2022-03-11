@@ -1,7 +1,7 @@
 <template>
-  <div class="min-w-full flex bg-gray-100">
+  <div class="min-w-full flex bg-gray-100 ">
     <!-- sidebar -->
-    <aside class="flex-none w-64 h-full">
+    <aside class="flex w-64 min-h-screen items-stretch">
       <sidebar />
     </aside>
     <div class="container px-5 py-5 mx-auto">
