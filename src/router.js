@@ -70,9 +70,9 @@ const routes = [
     {
         path: '/kamus',
         component: Kamus,
-        // meta: {
-        //     requiredAuth: true
-        // }
+        meta: {
+            layout : 'admin'
+        }
     },
 ]
 
