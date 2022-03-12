@@ -4,7 +4,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Kamus from './views/Kamus.vue'
 
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 
 const routes = [
     {
@@ -43,6 +43,16 @@ const routes = [
             layout : 'admin'
         },
     },
+
+    {
+        path: '/kelas/import/:id?',
+        component: () => import('./components/kelas/importKelas.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout : 'admin'
+        },
+    },
+
     {
         path: '/krs',
         component: () => import('./views/KRS.vue'),

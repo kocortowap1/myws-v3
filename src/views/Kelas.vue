@@ -1,5 +1,11 @@
 <template>
-  <div class="flex flex-col justify-center items-center">
+  <div>
+    <header class="flex items-center justify-between">
+      <h1 class="text-2xl font-bold">Kelas Kuliah</h1>
+      <a class="btn btn-primary text-white" href="/kelas/import">Import</a>
+    </header>
+  </div>
+  <!-- <div class="flex flex-col justify-center items-center">
     <span class="text-3xl">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +23,7 @@
       </svg>
     </span>
     <span class="text-4xl"> Fitur Kelas sedang diperbaiki </span>
-  </div>
+  </div> -->
 </template>
 <script>
 export default {
