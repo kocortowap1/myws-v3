@@ -5,7 +5,7 @@
     </h1>
     <span class="text-sm text-gray-400">{{ profil.jalan }}</span>
     <div class="mt-4">
-      <ul class="grid grid-cols-3 gap-2">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
         <li
           v-for="prodi in profil.prodi"
           :key="prodi.id_prodi"
@@ -89,7 +89,7 @@ export default {
       // }
     }
     async function initProfil() {
-      if (supported && !!storage.value === true) {
+      if (supported && Object.entries(storage.value).length) {
         const val = storage.value;
         Object.assign(profil, storage.value);
         const prodi = storage.value["prodi"];
