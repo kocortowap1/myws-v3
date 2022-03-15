@@ -17,13 +17,13 @@ export default {
     sidebar,
   },
   mounted(){
-    // if(!sessionStorage.getItem('token')){
-    //   this.$router.push('/login')
-    // }else if(sessionStorage.getItem('tokenRenderAt') < Date.now()){
-    //   this.$router.push('/login')
-    // }else{
-    //   return
-    // }
+    if(!sessionStorage.getItem('token')){
+      this.$router.push('/login')
+    }else if(sessionStorage.getItem('tokenRenderAt') < Date.now()){
+      this.$router.push('/login')
+    }else{
+      return
+    }
   }
 };
 </script>

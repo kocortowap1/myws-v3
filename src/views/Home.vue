@@ -94,7 +94,6 @@ export default {
         Object.assign(profil, storage.value);
         const prodi = storage.value["prodi"];
 
-        console.log(prodi);
         // prodi.foreach((el) => {
         //   //   prodiList.push(el)
         //   console.log(el);

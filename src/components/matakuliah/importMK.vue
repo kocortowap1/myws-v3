@@ -12,7 +12,6 @@
         <li class="step">Report</li>
       </ul>
       <!-- import file -->
-
       <div class="w-72" v-if="step === 0">
         <div class="form-control">
           <label for="label">
@@ -34,24 +33,7 @@
             </option>
           </select>
         </div>
-        <div class="form-control">
-          <label for="" class="label">
-            <span class="label-text">Periode</span>
-          </label>
-          <select
-            class="select select-bordered select-sm"
-            v-model="importParams.id_periode"
-          >
-            <option :value="null">Pilih Semester</option>
-            <option
-              v-for="smt in semesterList"
-              :key="smt.id_periode"
-              :value="smt.id_periode"
-            >
-              {{ smt.periode_pelaporan }}
-            </option>
-          </select>
-        </div>
+
         <div class="form-control">
           <label for="" class="label">
             <span class="label-text">Pilih file Excel</span>
@@ -62,7 +44,6 @@
             type="file"
             name=""
             id=""
-            @change="getExcelData"
             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           />
         </div>
@@ -73,55 +54,20 @@
 <script>
 import { useLocalStorage } from "vue-composable";
 import { reactive, ref } from "@vue/reactivity";
-import { getData } from "../../lib/pddikti";
-import { useRoute, useRouter } from "vue-router";
 // import { excelRead } from "../../lib/Excel";
-
 export default {
+  name: "ImportMK",
   setup() {
-    const { supported, storage } = useLocalStorage("wsProfil");
-    const { params } = useRoute();
-    const { replace } = useRouter();
-    let profil = storage.value;
-    let step = ref(0);
-    let importParams = reactive({
-      id_prodi: params.id || null,
-      id_periode: null,
+    const { supported, storage } = useLocalStorage();
+    const { read } = Excel;
+    const importParams = reactive({
+      id_prodi: params || null,
     });
-
-    const semesterList = reactive([]);
-    const getSemester = async () => {
-      const semester = await getData({
-        act: "GetPeriode",
-        filter: `id_prodi=${importParams.id_prodi}`,
-      });
-      if (semester.status) {
-        semester.data.forEach((el) => {
-          semesterList.push(el);
-        });
-      } else {
-        alert(semester.message);
-      }
-    };
-    const onChangeProdi = async () => {
-      await replace({ path: `/kelas/import/${importParams.id_prodi}` });
-      await getSemester();
-    };
-    const getExcelData = async (e) => {
-      const files = (await e.target.files) || e.dataTransfer.files;
-      if (!files.length) {
-        return;
-      }
-      console.log(files)
-      // const data = await excelRead(files[0]);
-    };
+    let profil = storage.value;
+    let excelFile = ref();
     return {
       profil,
-      step,
-      onChangeProdi,
-      semesterList,
-      importParams,
-      getExcelData,
+      excelFile,
     };
   },
 };
