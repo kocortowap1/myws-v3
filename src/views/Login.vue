@@ -97,53 +97,51 @@
               />
             </div>
             <div class="flex flex-row justify-between">
-
-            <button
-              class="
-                text-white
-                bg-indigo-500
-                border-0
-                py-2
-                px-8
-                focus:outline-none
-                hover:bg-indigo-600
-                rounded
-                text-lg
-              "
-              type="submit"
-            >
-              Login
-            </button>
-            <button
-              class="
-                bg-gray-100
-                border-0
-                p-2
-
-                focus:outline-none
-                hover:bg-gray-300
-                rounded
-                text-lg
-              "
-              type="button"
-              title="Konfigurasi Server"
-              @click="clearConfig"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+              <button
+                class="
+                  text-white
+                  bg-indigo-500
+                  border-0
+                  py-2
+                  px-8
+                  focus:outline-none
+                  hover:bg-indigo-600
+                  rounded
+                  text-lg
+                "
+                type="submit"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
-                />
-              </svg>
-            </button>
+                Login
+              </button>
+              <button
+                class="
+                  bg-gray-100
+                  border-0
+                  p-2
+                  focus:outline-none
+                  hover:bg-gray-300
+                  rounded
+                  text-lg
+                "
+                type="button"
+                title="Konfigurasi Server"
+                @click="clearConfig"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
+                  />
+                </svg>
+              </button>
             </div>
           </form>
           <form @submit.prevent="setWsConfig" v-else>
@@ -218,7 +216,7 @@ export default {
     const router = useRouter();
     const { json, loading, exec, status } = useFetch();
     const onSubmit = async () => {
-      await exec( import.meta.env.VITE_PDDIKTI_PATH, {
+      await exec(import.meta.env.VITE_PDDIKTI_PATH, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -227,9 +225,8 @@ export default {
       });
       if (status.value === 200) {
         const data = json.value;
-     
+
         if (data["error_code"] == "0") {
-          
           sessionStorage.setItem("token", data.data.token);
           // router.go(-1)
           let t = new Date();
@@ -243,18 +240,26 @@ export default {
         alert("Error Request");
       }
     };
-    const clearConfig = () =>{
-      Object.assign(wsConfig, {})
-      wsConfig.baseUrl = ''
-      localStorage.removeItem('wsConfig')
-    }
+    const clearConfig = () => {
+      Object.assign(wsConfig, {});
+      wsConfig.baseUrl = "";
+      localStorage.removeItem("wsConfig");
+    };
 
     const setWsConfig = () => {
       localStorage.setItem("wsConfig", JSON.stringify(tempWsConfig));
       wsConfig["baseUrl"] = tempWsConfig.baseUrl;
       Object.assign(tempWsConfig, {});
     };
-    return { auth, onSubmit, base, wsConfig, setWsConfig, tempWsConfig, clearConfig };
+    return {
+      auth,
+      onSubmit,
+      base,
+      wsConfig,
+      setWsConfig,
+      tempWsConfig,
+      clearConfig,
+    };
   },
 };
 </script>
