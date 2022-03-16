@@ -105,10 +105,14 @@ async function deleteData({ act, keys } = {}) {
         return { status: false, message: error }
     }
 }
+async function parseSchemas(schema){
+    return schema
+}
 
 export {
     getData,
     postData,
     putData,
-    deleteData
+    deleteData,
+    parseSchemas
 }
