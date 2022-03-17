@@ -105,7 +105,32 @@ async function deleteData({ act, keys } = {}) {
         return { status: false, message: error }
     }
 }
-async function parseSchemas(schema){
+async function getDictionary(fungsi) {
+    if (!act) return { status: false, message: 'Fungsi tidak dikenali' }
+    // params['token'] = localStorage.getItem('token')
+    try {
+        await exec(import.meta.env.VITE_PDDIKTI_PATH, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                act: 'GetDictionary',
+                fungsi: fungsi,
+                token: sessionStorage.getItem('token')
+            })
+        })
+        const response = json.value
+        if (response['error_code'] == "0") {
+            return { status: true, data: response['data'] }
+        } else {
+            return { status: false, message: response['error_desc'] }
+        }
+    } catch (error) {
+        return { status: false, message: error }
+    }
+}
+async function parseSchemas(schema) {
     return schema
 }
 
