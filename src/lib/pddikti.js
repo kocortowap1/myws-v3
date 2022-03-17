@@ -106,7 +106,7 @@ async function deleteData({ act, keys } = {}) {
     }
 }
 async function getDictionary(fungsi) {
-    if (!act) return { status: false, message: 'Fungsi tidak dikenali' }
+    if (!fungsi) return { status: false, message: 'Fungsi tidak dikenali' }
     // params['token'] = localStorage.getItem('token')
     try {
         await exec(import.meta.env.VITE_PDDIKTI_PATH, {
@@ -139,5 +139,6 @@ export {
     postData,
     putData,
     deleteData,
-    parseSchemas
+    parseSchemas,
+    getDictionary
 }

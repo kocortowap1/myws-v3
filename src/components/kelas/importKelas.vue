@@ -116,7 +116,7 @@
               <li>mode</li>
             </ul>
             <span class="text-red-500 text-xs block">*) mandatory</span>
-            <button class="btn btn-md btn-accent my-5">
+            <button class="btn btn-md btn-accent my-5" @click="downloadTemplate">
               Download Template
             </button>
           </div>
@@ -128,7 +128,7 @@
             {{ selectedProdi.nama_jenjang_pendidikan }} -
             {{ selectedProdi.nama_program_studi }}
           </h1>
-          <span>periode : {{importParams.id_periode}}</span>
+          <span>periode : {{ importParams.id_periode }}</span>
         </div>
         <div></div>
       </div>
@@ -143,6 +143,7 @@ import { useRoute, useRouter } from "vue-router";
 // import { excelRead } from "../../lib/Excel";
 import { useExcel } from "../../composable/excel";
 import { computed } from "@vue/runtime-core";
+import { useDictionary } from "../../composable/dictionary";
 export default {
   setup() {
     const { storage } = useLocalStorage("wsProfil");
@@ -193,7 +194,11 @@ export default {
       });
       totalExcelData.value = data.length;
     };
-    const downloadTemplate = async () => {};
+    const downloadTemplate = async () => {
+      const { parseRequest } = useDictionary();
+      const data = await parseRequest("InsertKelasKuliah");
+      console.log(data);
+    };
     const validasiExcel = async () => {
       step.value = 1;
     };
@@ -209,6 +214,7 @@ export default {
       totalExcelData,
       totalValidatedData,
       validasiExcel,
+      downloadTemplate,
     };
   },
 };
