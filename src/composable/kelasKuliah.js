@@ -4,7 +4,7 @@ export function useKelasKuliah() {
     async function getIDKelas(kode_mata_kuliah = '', id_prodi = '', nama_kelas = '') {
         const search = await getData({ act: 'GetDetailKelasKuliah', filter: `id_prodi='${id_prodi}' AND kode_mata_kuliah='${kode_mata_kuliah}' AND nama_kelas_kuliah='${nama_kelas}'`, limit: null })
         if (search.status) {
-            return search.data
+            return search.data[0]
         } else {
             return search.message
         }
