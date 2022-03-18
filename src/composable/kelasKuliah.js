@@ -1,15 +1,42 @@
-import { getData } from "../lib/pddikti"
+import { deleteData, getData, postData, putData } from "../lib/pddikti"
 
 export function useKelasKuliah() {
-    async function getIDKelas({ kode_mata_kuliah, id_prodi }) {
-        const search = await getData({ act: 'GetDetailKelasKuliah', filter: `id_prodi=${id_prodi} AND kode_mata_kuliah=${kode_mata_kuliah}`, limit: null })
+    async function getIDKelas(kode_mata_kuliah = '', id_prodi = '', nama_kelas = '') {
+        const search = await getData({ act: 'GetDetailKelasKuliah', filter: `id_prodi='${id_prodi}' AND kode_mata_kuliah='${kode_mata_kuliah}' AND nama_kelas_kuliah='${nama_kelas}'`, limit: null })
         if (search.status) {
             return search.data
         } else {
             return search.message
         }
     }
+    async function insertKelas(data) {
+        const save = await postData({ act: 'InsertKelasKuliah', record: data })
+        if (save.status) {
+            return Object.assign(data, { ...save['data'][0] })
+        } else {
+            return { status: false, message: save.message }
+        }
+    }
+    async function updateKelas(data, key) {
+        const update = await putData({ act: 'UpdateKelasKuliah', keys: key, record: data })
+        if (update.status) {
+            return Object.assign(data, { ...update['data'][0] })
+        } else {
+            return { status: false, message: update.message }
+        }
+    }
+    async function deleteKelas(key) {
+        const del = await deleteData({ act: 'DeleteKelasKuliah', keys: key })
+        if (del.status) {
+            return Object.assign(data, { ...del['data'][0] })
+        } else {
+            return { status: false, message: del.message }
+        }
+    }
     return {
-        getIDKelas
+        getIDKelas,
+        insertKelas,
+        updateKelas,
+        deleteKelas
     }
 }
