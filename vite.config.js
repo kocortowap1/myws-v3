@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '^/ws/.*': {
-        // target: 'http://103.135.224.251:8082',
-        target: 'http://localhost:3003',
+        target: 'http://103.135.224.251:3003',
+        // target: 'http://localhost:3003',
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, '')
       }
