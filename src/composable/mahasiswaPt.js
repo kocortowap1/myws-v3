@@ -1,6 +1,14 @@
-import { getData } from "../lib/pddikti";
+import { getData, postData, putData, deleteData } from "../lib/pddikti";
 
 export function useMahasiswaPT() {
+    async function getListMahasiswa({ filter = '', limit = 10, offset = 0 }) {
+        const list = await getData({ act: 'GetDataLengkapMahasiswaProdi', filter: filter, limit: limit, offset: offset })
+        if (list.status) {
+            return list.data
+        } else {
+            return { status: false, message: list.message }
+        }
+    }
     async function getIDRegistrasiMahasiswa(id_prodi, nim) {
         const search = await getData({ act: 'GetListRiwayatPendidikanMahasiswa', filter: `id_prodi='${id_prodi} AND nim='${nim}'`, limit: null })
         if (search.status && !!search.data) {
@@ -37,6 +45,7 @@ export function useMahasiswaPT() {
         getIDRegistrasiMahasiswa,
         insertRiwayatPendidikanMahasiswa,
         updateRiwayatPendidikanMahasiswa,
-        deleteRiwayatPendidikanMahasiswa
+        deleteRiwayatPendidikanMahasiswa,
+        getListMahasiswa
     }
 }

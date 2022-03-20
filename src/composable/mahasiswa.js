@@ -1,4 +1,4 @@
-import { getData } from "../lib/pddikti"
+import { getData, postData, putData, deleteData } from "../lib/pddikti";
 
 export function useMahasiswa() {
     async function getIDMahasiswa({ nama, tanggal_lahir, jk, nama_ibu }) {

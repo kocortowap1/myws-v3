@@ -1,6 +1,14 @@
 import { deleteData, getData, postData, putData } from "../lib/pddikti"
 
 export function useKelasKuliah() {
+    async function getListKelasKuliah({ filter = '', limit = 10, offset = 0 }) {
+        const list = await getData({ act: 'GetListKelasKuliah', filter: filter, limit: limit, offset: offset })
+        if (list.status) {
+            return list.data
+        } else {
+            return { status: false, message: list.message }
+        }
+    }
     async function getIDKelas(kode_mata_kuliah = '', id_prodi = '', nama_kelas = '') {
         const search = await getData({ act: 'GetDetailKelasKuliah', filter: `id_prodi='${id_prodi}' AND kode_mata_kuliah='${kode_mata_kuliah}' AND nama_kelas_kuliah='${nama_kelas}'`, limit: null })
         if (search.status) {
@@ -34,6 +42,7 @@ export function useKelasKuliah() {
         }
     }
     return {
+        getListKelasKuliah,
         getIDKelas,
         insertKelas,
         updateKelas,
