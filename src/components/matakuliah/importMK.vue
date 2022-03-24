@@ -6,10 +6,30 @@
     </header>
     <div class="my-3 bg-white px-6 py-6">
       <ul class="steps mx-auto w-full">
-        <li class="step step-primary">Upload file</li>
-        <li class="step">Validasi</li>
-        <li class="step">Import</li>
-        <li class="step">Report</li>
+        <li
+          class="step cursor-pointer"
+          :class="step == 0 ? 'step-primary' : null"
+        >
+          Upload file
+        </li>
+        <li
+          class="step cursor-pointer"
+          :class="step == 1 ? 'step-primary' : null"
+        >
+          Validasi
+        </li>
+        <li
+          class="step cursor-pointer"
+          :class="step == 2 ? 'step-primary' : null"
+        >
+          Import
+        </li>
+        <li
+          class="step cursor-pointer"
+          :class="step == 3 ? 'step-primary' : null"
+        >
+          Report
+        </li>
       </ul>
       <!-- import file -->
       <div class="w-72" v-if="step === 0">
@@ -42,6 +62,8 @@
             class="input"
             placeholder=""
             type="file"
+            ref="excelFile"
+            @change="onUpload"
             name=""
             id=""
             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -54,20 +76,38 @@
 <script>
 import { useLocalStorage } from "vue-composable";
 import { reactive, ref } from "@vue/reactivity";
-// import { excelRead } from "../../lib/Excel";
+import { useExcel } from "../../composable/excel";
+import { useRoute, useRouter } from "vue-router";
 export default {
   name: "ImportMK",
   setup() {
-    const { supported, storage } = useLocalStorage();
-    const { read } = Excel;
+    const { supported, storage } = useLocalStorage("wsProfil");
+    const { params } = useRoute();
+    const { replace } = useRouter();
+    const { readExcel } = useExcel();
     const importParams = reactive({
-      id_prodi: params || null,
+      id_prodi: params.id || null,
     });
+    const onChangeProdi = async () => {
+      await replace({ path: `/matakuliah/import/${importParams.id_prodi}` });
+    };
+    let step = ref(0);
     let profil = storage.value;
     let excelFile = ref();
+    const onUpload = async (e) => {
+      const files = (await e.target.files) || e.dataTransfer.files;
+      if (!files.length) {
+        return;
+      }
+      const excelData = await readExcel(files[0]);
+      console.log(excelData);
+    };
     return {
       profil,
-      excelFile,
+      importParams,
+      step,
+      onUpload,
+      onChangeProdi,
     };
   },
 };

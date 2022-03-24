@@ -16,7 +16,7 @@ const routes = [
         component: Home,
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
         },
     },
     {
@@ -24,7 +24,7 @@ const routes = [
         component: () => import('./views/MHS.vue'),
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
         },
     },
     {
@@ -32,7 +32,15 @@ const routes = [
         component: () => import('./views/Matakuliah.vue'),
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
+        },
+    },
+    {
+        path: '/matakuliah/import/:id?',
+        component: () => import('./components/matakuliah/importMK.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout: 'admin'
         },
     },
     {
@@ -40,7 +48,7 @@ const routes = [
         component: () => import('./views/Kelas.vue'),
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
         },
     },
 
@@ -49,7 +57,7 @@ const routes = [
         component: () => import('./components/kelas/importKelas.vue'),
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
         },
     },
 
@@ -58,7 +66,7 @@ const routes = [
         component: () => import('./views/KRS.vue'),
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
         },
     },
     {
@@ -66,7 +74,7 @@ const routes = [
         component: () => import('./views/AKM.vue'),
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
         },
     },
     {
@@ -74,14 +82,14 @@ const routes = [
         component: () => import('./views/Aktivitas.vue'),
         meta: {
             // requiredAuth: true,
-            layout : 'admin'
+            layout: 'admin'
         },
     },
     {
         path: '/kamus',
         component: Kamus,
         meta: {
-            layout : 'admin'
+            layout: 'admin'
         }
     },
 ]
@@ -95,7 +103,7 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
     // console.log(sessionStorage.getItem('tokenRenderAt') < Date.now())
-//
+    //
     if (to.matched.some(record => record.meta.requiredAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
@@ -103,7 +111,7 @@ router.beforeEach((to, from, next) => {
             next({
                 path: '/login',
             })
-        }else if (sessionStorage.getItem('tokenRenderAt') < Date.now()){
+        } else if (sessionStorage.getItem('tokenRenderAt') < Date.now()) {
             next({
                 path: '/login',
             })
