@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-full flex bg-gray-100 ">
+  <div class="min-w-full flex bg-gray-100">
     <!-- sidebar -->
     <aside class="flex w-64 min-h-screen items-stretch">
       <sidebar />
@@ -10,20 +10,26 @@
   </div>
 </template>
 <script>
+import { onMounted, onUnmounted } from "@vue/runtime-core";
 import sidebar from "../components/Sidebar.vue";
 export default {
   name: "AdminLayout",
   components: {
     sidebar,
   },
-  mounted(){
-    if(!sessionStorage.getItem('token')){
-      this.$router.push('/login')
-    }else if(sessionStorage.getItem('tokenRenderAt') < Date.now()){
-      this.$router.push('/login')
-    }else{
-      return
-    }
-  }
+  setup() {
+    onMounted(() => {
+      if (!sessionStorage.getItem("token")) {
+        this.$router.push("/login");
+      } else if (sessionStorage.getItem("tokenRenderAt") < Date.now()) {
+        this.$router.push("/login");
+      } else {
+        return;
+      }
+    });
+    onUnmounted(() => {
+      console.log('layout close')
+    })
+  },
 };
 </script>
