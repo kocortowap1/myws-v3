@@ -1,6 +1,7 @@
 import { getData, postData, putData, deleteData } from "../lib/pddikti";
 
 export function useMatakuliah() {
+
     async function getListMatakuliah({ filter = '', limit = 10, offset = 0 }) {
         const list = await getData({ act: 'GetListMataKuliah', filter: filter, limit: limit, offset: offset })
         if (list.status) {
@@ -17,12 +18,20 @@ export function useMatakuliah() {
             return { status: false, message: total.message }
         }
     }
-    async function getIDMatakuliah(id_prodi = '', kode_mata_kuliah = '') {
-        const search = await getData({ act: 'GetDetailMataKuliah', filter: `id_prodi='${id_prodi}' AND kode_mata_kuliah='${kode_mata_kuliah}'`, limit: null })
+    async function getIDMKByKodeMK(kode_mata_kuliah = '') {
+        const search = await getData({ act: 'GetDetailMataKuliah', filter: `kode_mata_kuliah='${kode_mata_kuliah}'`, limit: null })
         if (search.status) {
             return search.data[0]
         } else {
-            return search.message
+            return { ...search }
+        }
+    }
+    async function getIDMKByNamaSKS(id_prodi = '', mk = '', sks = 0) {
+        const search = await getData({ act: 'GetDetailMataKuliah', filter: `id_prodi='${id_prodi}' AND nama_mata_kuliah ilike '%${mk}%' AND sks='${sks}'` })
+        if (search.status) {
+            return search.data[0]
+        } else {
+            return { ...search }
         }
     }
     async function insertMatakuliah(data) {
@@ -49,12 +58,29 @@ export function useMatakuliah() {
             return { status: false, message: del.message }
         }
     }
+    function hitungTotalSKS(mk = {}) {
+        if (mk['sks_praktek'] === undefined) {
+            mk['sks_praktek'] = 0
+        }
+        if (mk['sks_praktek_lapangan'] === undefined) {
+            mk['sks_praktek_lapangan'] = 0
+        }
+        if (mk['sks_simulasi'] === undefined) {
+            mk['sks_simulasi'] = 0
+        }
+        if (mk['sks_tatap_muka'] === undefined) {
+            mk['sks_tatap_muka'] = 0
+        }
+        return { ...mk, sks_mata_kuliah: mk['sks_praktek'] + mk['sks_praktek_lapangan'] + mk['sks_simulasi'] + mk['sks_tatap_muka'] }
+    }
     return {
         getListMatakuliah,
-        getIDMatakuliah,
+        getIDMKByKodeMK,
         insertMatakuliah,
         updateMatakuliah,
         deleteMatakuliah,
-        getCountMataKuliah
+        getCountMataKuliah,
+        hitungTotalSKS,
+        getIDMKByNamaSKS
     }
 }

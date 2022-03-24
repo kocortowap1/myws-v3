@@ -69,6 +69,69 @@
             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           />
         </div>
+        <button
+          class="btn btn-primary btn-md text-white hover: text-gray-200"
+          v-if="excelData.length"
+          @click="validasi"
+        >
+          Validasi
+        </button>
+      </div>
+      <div v-if="step === 1" class="mt-4">
+        <div class="flex justify-between items-center">
+          <h1 class="text-xl text-center">Validasi Data</h1>
+          <button class="btn btn-primary btn-md" @click="importExcel">
+            Import
+          </button>
+        </div>
+        <div class="overflow-auto" v-if="validateData.length">
+          <table class="table table-compact table-sm w-full">
+            <thead>
+              <tr>
+                <td>KODE MK</td>
+                <td>NAMA MK</td>
+                <td>SKS PRAKTEK</td>
+                <td>SKS PRAKTEK LAP</td>
+                <td>SKS SIMULASI</td>
+                <td>SKS TATAP MUKA</td>
+                <td>SKS TOTAL</td>
+                <td>STATUS</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(v, i) in validateData"
+                :key="i"
+                :class="v.error ? 'bg-red-600 text-white' : null"
+              >
+                <td>
+                  {{ v.kode_mk }}
+                </td>
+                <td>
+                  {{ v.nama_mk }}
+                </td>
+                <td>
+                  {{ v.sks_praktek }}
+                </td>
+                <td>
+                  {{ v.sks_praktek_lapangan }}
+                </td>
+                <td>
+                  {{ v.sks_simulasi }}
+                </td>
+                <td>
+                  {{ v.sks_tatap_muka }}
+                </td>
+                <td>
+                  {{ v.sks_mata_kuliah }}
+                </td>
+                <td>
+                  {{ v.message }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -78,6 +141,7 @@ import { useLocalStorage } from "vue-composable";
 import { reactive, ref } from "@vue/reactivity";
 import { useExcel } from "../../composable/excel";
 import { useRoute, useRouter } from "vue-router";
+import { useMatakuliah } from "../../composable/matakuliah";
 export default {
   name: "ImportMK",
   setup() {
@@ -85,6 +149,9 @@ export default {
     const { params } = useRoute();
     const { replace } = useRouter();
     const { readExcel } = useExcel();
+    const excelData = reactive([]);
+    const validateData = reactive([]);
+    const { hitungTotalSKS, getIDMKByKodeMK } = useMatakuliah();
     const importParams = reactive({
       id_prodi: params.id || null,
     });
@@ -99,15 +166,59 @@ export default {
       if (!files.length) {
         return;
       }
-      const excelData = await readExcel(files[0]);
-      console.log(excelData);
+      const d = await readExcel(files[0]);
+      d.forEach((el) => {
+        excelData.push(hitungTotalSKS(el));
+      });
+      // console.log(excelData);
     };
+    const validasi = async () => {
+      await nextStep();
+      for (const mk of excelData) {
+        const check = await getIDMKByKodeMK(mk["kode_mk"]);
+
+        if (check.status && check === undefined) {
+          validateData.push({
+            kode_mata_kuliah: mk["kode_mk"],
+            nama_mata_kuliah: mk["nama_mk"],
+            ...mk,
+            error: false,
+            message: "ok",
+          });
+        } else {
+          validateData.push({
+            kode_mata_kuliah: mk["kode_mk"],
+            nama_mata_kuliah: mk["nama_mk"],
+            ...mk,
+            error: true,
+            message: `Kode ${mk["kode_mk"]} telah digunakan`,
+          });
+        }
+      }
+    };
+    const importExcel = async () => {
+      await nextStep();
+      const importData = validateData.filter((k) => !!k.error);
+      console.log(importData);
+    };
+    async function nextStep() {
+      step.value = step.value + 1;
+    }
+    async function prevStep() {
+      step.value = step.value - 1;
+    }
     return {
       profil,
       importParams,
       step,
       onUpload,
+      excelData,
       onChangeProdi,
+      nextStep,
+      prevStep,
+      validasi,
+      validateData,
+      importExcel,
     };
   },
 };
