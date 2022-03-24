@@ -12,7 +12,7 @@ export function useExcelTemplate() {
                 data.push({ [el['fieldname']]: el['keterangan'] })
             })
             console.log(data)
-            await writeExcel({ filename: `${fungsi}.xlsx`, data: data })
+             writeExcel({ filename: `${fungsi}.xlsx`, data: data })
         } else {
             alert(d.message)
         }
