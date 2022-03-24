@@ -21,7 +21,7 @@
     </tbody>
   </table>
   <div class="btn-group my-4 flex flex-nowrap whitespace-nowrap overflow-auto">
-    <button class="btn btn-sm" v-for="i in totalPages" :key="i">{{ i }}</button>
+    <!-- <button class="btn btn-sm" v-for="i in totalPages" :key="i">{{ i }}</button> -->
     <!-- <button class="btn btn-sm">1</button>
     <button class="btn btn-sm btn-active">2</button>
     <button class="btn btn-sm">3</button>
