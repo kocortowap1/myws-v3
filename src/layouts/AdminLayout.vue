@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import { onMounted, onUnmounted } from "@vue/runtime-core";
+import { onMounted, onUnmounted, onUpdated } from "@vue/runtime-core";
 import sidebar from "../components/Sidebar.vue";
 export default {
   name: "AdminLayout",
@@ -18,7 +18,7 @@ export default {
     sidebar,
   },
   setup() {
-    onMounted(() => {
+    const checkToken = async () => {
       if (!sessionStorage.getItem("token")) {
         this.$router.push("/login");
       } else if (sessionStorage.getItem("tokenRenderAt") < Date.now()) {
@@ -26,10 +26,17 @@ export default {
       } else {
         return;
       }
+    };
+    onMounted(() => {
+      checkToken();
+    });
+    onUpdated(() => {
+      // checkToken();
+      console.log('layout change')
     });
     onUnmounted(() => {
-      console.log('layout close')
-    })
+      console.log("layout close");
+    });
   },
 };
 </script>

@@ -94,7 +94,7 @@
             </p>
           </div>
         </div>
-        <div class="overflow-auto" v-if="validateData.length">
+        <div class="overflow-auto">
           <table class="table table-compact table-sm w-full">
             <thead>
               <tr>
@@ -111,11 +111,67 @@
                 <th>TOTAL</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody v-if="validateData.length">
               <tr
                 v-for="(v, i) in validateData"
                 :key="i"
                 :class="v.error ? 'bg-red-600 text-white' : null"
+              >
+                <td>
+                  {{ v.kode_mata_kuliah }}
+                </td>
+                <td>
+                  {{ v.nama_mata_kuliah }}
+                </td>
+                <td>
+                  {{ v.sks_praktek }}
+                </td>
+                <td>
+                  {{ v.sks_praktek_lapangan }}
+                </td>
+                <td>
+                  {{ v.sks_simulasi }}
+                </td>
+                <td>
+                  {{ v.sks_tatap_muka }}
+                </td>
+                <td>
+                  {{ v.sks_mata_kuliah }}
+                </td>
+                <td>
+                  {{ v.message }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div v-if="step === 2">
+        <div class="overflow-auto">
+          <table class="table table-compact table-sm w-full">
+            <thead>
+              <tr>
+                <th rowspan="2">KODE MK</th>
+                <th rowspan="2">NAMA MK</th>
+                <th colspan="5" class="text-center">SKS</th>
+                <th rowspan="2">STATUS</th>
+              </tr>
+              <tr>
+                <th>PRAKTEK</th>
+                <th>PRAKTEK LAP</th>
+                <th>SIMULASI</th>
+                <th>TATAP MUKA</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody v-if="importedData.length">
+              <tr
+                v-for="(v, i) in importedData"
+                :key="i"
+                :class="[
+                  v.error ? 'bg-red-600 text-white' : null,
+                  v.id_matkul ? 'bg-green-400' : null,
+                ]"
               >
                 <td>
                   {{ v.kode_mata_kuliah }}
