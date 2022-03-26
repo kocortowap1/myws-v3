@@ -20,7 +20,7 @@ export function useMatakuliah() {
     }
     async function getIDMKByKodeMK(kode_mata_kuliah = '') {
         const search = await getData({ act: 'GetDetailMataKuliah', filter: `kode_mata_kuliah='${kode_mata_kuliah}'`, limit: null })
-        if (search.status) {
+        if (search['status']) {
             return search.data[0]
         } else {
             return { ...search }
@@ -35,9 +35,22 @@ export function useMatakuliah() {
         }
     }
     async function insertMatakuliah(data) {
-        const save = await postData({ act: 'InsertMataKuliah', record: data })
+        let newData = {
+            kode_mata_kuliah: data['kode_mata_kuliah'],
+            nama_mata_kuliah: data['nama_mata_kuliah'],
+            sks_mata_kuliah: data['sks_mata_kuliah'],
+            sks_praktek: data['sks_praktek'],
+            sks_praktek_lapangan: data['sks_praktek_lapangan'],
+            sks_simulasi: data['sks_simulasi'],
+            sks_tatap_muka: data['sks_tatap_muka'],
+            id_prodi: data['id_prodi'],
+            id_jenis_mata_kuliah: data['id_jenis_mata_kuliah'] || "",
+            id_kelompok_mata_kuliah: data['id_kelompok_mata_kuliah'] || "",
+
+        }
+        const save = await postData({ act: 'InsertMataKuliah', record: newData })
         if (save.status) {
-            return Object.assign(data, { ...save['data'][0] })
+            return Object.assign(data, { ...save['data'][0], status: true })
         } else {
             return { status: false, message: save.message }
         }
@@ -73,6 +86,7 @@ export function useMatakuliah() {
         }
         return { ...mk, sks_mata_kuliah: mk['sks_praktek'] + mk['sks_praktek_lapangan'] + mk['sks_simulasi'] + mk['sks_tatap_muka'] }
     }
+
     return {
         getListMatakuliah,
         getIDMKByKodeMK,
