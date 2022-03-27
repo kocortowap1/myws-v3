@@ -214,7 +214,7 @@ export default {
       ...JSON.parse(localStorage.getItem("wsConfig")),
     });
     const tempWsConfig = reactive({});
-    const router = useRouter();
+    const { push } = useRouter();
     const { json, loading, exec, status } = useFetch();
     const onSubmit = async () => {
       await exec(import.meta.env.VITE_PDDIKTI_PATH, {
@@ -235,9 +235,10 @@ export default {
             "tokenRenderAt",
             t.setTime(t.getTime() + 1 * 60 * 60 * 1000)
           );
-          router.push("/");
+          push({path: '/'});
         }
       } else {
+        console.log(status);
         alert("Error Request");
       }
     };
