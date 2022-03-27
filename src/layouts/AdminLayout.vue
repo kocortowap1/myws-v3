@@ -12,17 +12,19 @@
 <script>
 import { onMounted, onUnmounted, onUpdated } from "@vue/runtime-core";
 import sidebar from "../components/Sidebar.vue";
+import { useRouter } from "vue-router";
 export default {
   name: "AdminLayout",
   components: {
     sidebar,
   },
   setup() {
+    const { push } = useRouter();
     const checkToken = async () => {
       if (!sessionStorage.getItem("token")) {
-        this.$router.push("/login");
+        push("/login");
       } else if (sessionStorage.getItem("tokenRenderAt") < Date.now()) {
-        this.$router.push("/login");
+        push("/login");
       } else {
         return;
       }
@@ -32,7 +34,7 @@ export default {
     });
     onUpdated(() => {
       // checkToken();
-      console.log('layout change')
+      console.log("layout change");
     });
     onUnmounted(() => {
       console.log("layout close");
