@@ -65,6 +65,7 @@
                   duration-200
                   ease-in-out
                 "
+                autofocus
                 placeholder="Username/Kode PT"
               />
             </div>
