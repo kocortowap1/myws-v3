@@ -90,6 +90,7 @@ export default {
     });
     const searchCat = ref("nim");
     const searchVal = ref("");
+    const totalMhs = ref(0)
     const buildSearch = computed(() => {
       if (searchVal.value) {
         return `${searchCat.value} ilike '%${searchVal.value}%'`;
@@ -97,19 +98,25 @@ export default {
         return ``;
       }
     });
-    const { getListMahasiswa } = useMahasiswaPT();
+    const { getListMahasiswa, countMahasiswa  } = useMahasiswaPT();
     const prepare = await getListMahasiswa({});
     if (prepare["status"] === undefined) {
       for (const l of prepare) {
         listMhs.push(l);
       }
     }
+    const getTotalMahasiswa = async() => {
+      const total = await countMahasiswa(buildSearch.value)
+      totalMhs.value = total
+    }
     const getCustomFilter = async () => {
-      await replace({ query: { ...query, [searchCat.value]: searchVal.value } });
       let newFilter = "";
-      if (buildSearch.value) {
+      if(searchVal.value.length){
+        await replace({ query: { ...query, [searchCat.value]: searchVal.value } });
         newFilter = buildSearch.value;
+
       }
+
 
       const newData = await getListMahasiswa({
         filter: newFilter,
@@ -117,12 +124,14 @@ export default {
         offset: filterParams.offset,
       });
 
-      console.log(newData);
-      // if (newData["status"] === undefined) {
-      //   for (const l of newData) {
-      //     listMhs.push(l);
-      //   }
-      // }
+      // console.log(newData);
+      if (newData["status"] === undefined) {
+        for (const l of newData) {
+          listMhs.push(l);
+        }
+      }else{
+        alert(newData['message'])
+      }
     };
 
     return {
@@ -132,6 +141,7 @@ export default {
       searchVal,
       getCustomFilter,
       buildSearch,
+      totalMhs
     };
   },
 };

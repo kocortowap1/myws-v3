@@ -41,11 +41,20 @@ export function useMahasiswaPT() {
             return { status: false, message: del.message }
         }
     }
+    async function countMahasiswa(filter) {
+        const total = await getData({ act: 'GetCountMahasiswa', filter: filter, limit: null })
+        if (total.status) {
+            return parseInt(total.data)
+        } else {
+            return total
+        }
+    }
     return {
         getIDRegistrasiMahasiswa,
         insertRiwayatPendidikanMahasiswa,
         updateRiwayatPendidikanMahasiswa,
         deleteRiwayatPendidikanMahasiswa,
-        getListMahasiswa
+        getListMahasiswa,
+        countMahasiswa
     }
 }
