@@ -233,7 +233,7 @@ export default {
         sks_praktek: mk["sks_praktek"],
         sks_praktek_lapangan: mk["sks_praktek_lapangan"],
         sks_simulasi: mk["sks_simulasi"],
-        sks_tatap_muka: mk["sks_tatap_muka"],
+        sks_tatap_muka: parseInt(mk["sks_tatap_muka"]),
       };
       if (params.id) {
         //update
