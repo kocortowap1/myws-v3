@@ -28,7 +28,7 @@ async function getData({ act, filter = "", order = "", limit = 10, offset = 0 } 
         return { status: false, message: error }
     }
 }
-async function postData({ act, record } = {}) {
+async function postData({ act, record = {} }) {
     if (!act) return { status: false, message: 'Fungsi tidak dikenali' }
     if (!record || !Object.entries(record).length) return { status: false, message: 'Data tidak ada' }
     try {

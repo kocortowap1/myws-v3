@@ -44,6 +44,14 @@ const routes = [
         },
     },
     {
+        path: '/matakuliah/form/:id?',
+        component: () => import('./components/matakuliah/formMK.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout: 'admin'
+        },
+    },
+    {
         path: '/kelas',
         component: () => import('./views/Kelas.vue'),
         meta: {
