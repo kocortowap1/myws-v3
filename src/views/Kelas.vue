@@ -5,6 +5,9 @@
       <a class="btn btn-primary text-white" href="/kelas/import">Import</a>
     </header>
   </div>
+  <div>
+    <list-kelas></list-kelas>
+  </div>
   <!-- <div class="flex flex-col justify-center items-center">
     <span class="text-3xl">
       <svg
@@ -26,7 +29,11 @@
   </div> -->
 </template>
 <script>
+import listKelas from "../components/kelas/listKelas.vue";
 export default {
   name: "Kelas",
+  components: {
+    listKelas,
+  },
 };
 </script>
