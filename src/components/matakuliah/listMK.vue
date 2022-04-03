@@ -87,11 +87,7 @@
     </tbody>
   </table>
   <div class="btn-group my-4 flex flex-nowrap whitespace-nowrap overflow-auto">
-    <!-- <button class="btn btn-sm" v-for="i in totalPages" :key="i">{{ i }}</button> -->
-    <!-- <button class="btn btn-sm">1</button>
-    <button class="btn btn-sm btn-active">2</button>
-    <button class="btn btn-sm">3</button>
-    <button class="btn btn-sm">4</button> -->
+
   </div>
 </template>
 <script>
@@ -102,7 +98,7 @@ import { useRoute, useRouter } from "vue-router";
 
 export default {
   name: "ListMK",
-  setup() {
+  async setup() {
     const { getListMatakuliah, getCountMataKuliah } = useMatakuliah();
     const listMK = reactive([]);
     const totalData = ref(0);
@@ -110,17 +106,18 @@ export default {
     const seachVal = ref("");
     const { query } = useRoute();
     const { replace } = useRouter();
-    const filterParams = reactive({
-      id_prodi: "",
-      limit: 10,
-      offset: 0,
-    });
+    const errorMessage = ref("")
 
     const buildSearch = computed(() => {
       if (seachVal.value) {
         return `${searchCat.value} ilike '%${seachVal.value}%'`;
       }
       return ``;
+    });
+    const filterParams = reactive({
+      id_prodi: "",
+      limit: 10,
+      offset: 0,
     });
     const getdata = async function () {
       const data = await getListMatakuliah({});
@@ -144,10 +141,20 @@ export default {
       }
     };
     watch(query, console.log(query));
-    onMounted(() => {
-      getdata();
-      getTotalData();
-    });
+
+    //init data
+    const prepare = await getListMatakuliah({})
+    if(prepare['status'] === undefined){
+      for(let mk of prepare){
+        listMK.push(mk)
+      }
+    }else{
+      errorMessage.value = prepare['message']
+    }
+    // onMounted(() => {
+    //   getdata();
+    //   getTotalData();
+    // });
     return {
       listMK,
       totalData,
