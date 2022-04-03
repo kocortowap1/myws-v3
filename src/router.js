@@ -68,6 +68,14 @@ const routes = [
             layout: 'admin'
         },
     },
+    {
+        path: '/kelas/form/:id?',
+        component: () => import('./components/kelas/formKelas.vue'),
+        meta: {
+            // requiredAuth: true,
+            layout: 'admin'
+        },
+    },
 
     {
         path: '/krs',
